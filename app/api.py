@@ -1,7 +1,7 @@
-from flask_restx import Api
+from flask_restx import Api, Namespace
 from flask import Blueprint
 
-from .controller.user import api as user_namespace
+import app.controller
 
 blueprint = Blueprint("api", __name__)
 
@@ -12,5 +12,6 @@ api = Api(
     description="a boilerplate for a flask rest-x api",
 )
 
-# add namespace for each api here
-api.add_namespace(user_namespace, path="/user")
+for namespace in vars(app.controller).values():
+    if isinstance(namespace, Namespace):
+        api.add_namespace(namespace, path=namespace.path)
