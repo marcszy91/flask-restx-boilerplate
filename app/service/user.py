@@ -43,7 +43,7 @@ def get_a_user(email: str) -> User:
         email (str): the email
 
     Returns:
-        [type]: [description]
+        [User]: the user object
     """
     return User.query.filter_by(email=email).first()
 
