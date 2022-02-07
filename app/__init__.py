@@ -2,7 +2,6 @@ import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from pyrsistent import b
 
 from .config import config_by_name
 from flask.app import Flask
