@@ -11,7 +11,7 @@ _user = UserDto.user
 
 @api.route("/")
 class UserList(Resource):
-    """route to list all users
+    """route to list all users and create a new user
 
     Args:
         Resource (UserDto.user): the user dto
