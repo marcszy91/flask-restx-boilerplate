@@ -114,7 +114,7 @@ There are the following differences in the repositories aboth:
    ```bash
    flask run
    ```
-
+   
 1. Now you can open the following url in your browser to see the swagger ui page
 
    ```
