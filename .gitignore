@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# sqlalchemy
+/migrations
+
+# databease files
+/app/*.db

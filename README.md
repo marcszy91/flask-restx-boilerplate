@@ -4,10 +4,11 @@ The flask-restx-boilerplate allows you to create fast a Flask API application.
 
 Besides that there is an How-To for beginners in the Wiki, which explains step by step how to add a new API Endpoint
 
-The code is mainly based on the following repo [cosmic-byte/flask-restplus-boilerplate](https://github.com/cosmic-byte/flask-restplus-boilerplate) and a little bit from 
+The code is mainly based on the following repo [cosmic-byte/flask-restplus-boilerplate](https://github.com/cosmic-byte/flask-restplus-boilerplate) and a little bit from
 [antkahn/flask-api-starter-kit](https://github.com/antkahn/flask-api-starter-kit)
 
 There are the following differences in the repositories aboth:
+
 - The tutorials are a little bit outdated and work no longer correctly
 - The package versions are outdated and no longer match the tutorial
 - This repository combines the best of both (for my understanding)
