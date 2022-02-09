@@ -1,37 +1,122 @@
-## Welcome to GitHub Pages
+# flask-restx-boilerplate
 
-You can use the [editor on GitHub](https://github.com/Ezak91/flask-restx-boilerplate/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+The flask-restx-boilerplate allows you to create fast a Flask API application.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Besides that there is an How-To for beginners in the Wiki, which explains step by step how to add a new API Endpoint
 
-### Markdown
+The code is mainly based on the following repo [cosmic-byte/flask-restplus-boilerplate](https://github.com/cosmic-byte/flask-restplus-boilerplate) and a little bit from
+[antkahn/flask-api-starter-kit](https://github.com/antkahn/flask-api-starter-kit)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+There are the following differences in the repositories aboth:
 
-```markdown
-Syntax highlighted code block
+- The tutorials are a little bit outdated and work no longer correctly
+- The package versions are outdated and no longer match the tutorial
+- This repository combines the best of both (for my understanding)
+- Use Flask CLI instead of manager (nativ)
+- Use no makefiles (All os friendly)
 
-# Header 1
-## Header 2
-### Header 3
+# Development
 
-- Bulleted
-- List
+[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-blue.svg)](https://github.com/psf/black)
 
-1. Numbered
-2. List
+# Install / Quickstart
 
-**Bold** and _Italic_ and `Code` text
+## Dependencies
 
-[Link](url) and ![Image](src)
-```
+### Local dependencies
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+[python 3.9.10](https://www.python.org)
 
-### Jekyll Themes
+## Full How-To
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Ezak91/flask-restx-boilerplate/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+[Wiki How-To](https://github.com/Ezak91/flask-restx-boilerplate/wiki#how-to)
 
-### Support or Contact
+## Quickstart
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### setup project
+
+1. clone this repository
+
+   ```bash
+   git clone https://github.com/Ezak91/flask-restx-boilerplate
+   ```
+
+1. change to directory
+
+   ```bash
+   cd flask-restx-boilerplate
+   ```
+
+1. creat venv
+
+   ```bash
+   # windows
+   py -3 -m venv .venv
+
+   # on linux/mac
+   python3 -m venv .venv
+   ```
+
+1. activate venv
+
+   ```bash
+   # windows
+   .venv\scripts\activate
+
+   # on linux/mac
+   source .venv/bin/activate
+   ```
+
+1. install requirements
+
+   ```bash
+   # for developing
+   pip install -r requirements-dev.txt
+   # only run
+   pip install -r requirements.txt
+   ```
+
+1. setup flask application
+
+   ```bash
+   # bash (linux, mac)
+   export FLASK_APP=run
+   # bash (windows)
+   set FLASK_APP=run
+   # powershell (windows)
+   $env:FLASK_APP = "run"
+   ```
+
+1. setup database
+
+   ```bash
+   flask db init
+   flask db migrate -m "Initial migration."
+   flask db upgrade
+   ```
+
+### run flask
+
+1. setup flask application
+
+   ```bash
+   # bash (linux, mac)
+   export FLASK_APP=run
+   # bash (windows)
+   set FLASK_APP=run
+   # powershell (windows)
+   $env:FLASK_APP = "run"
+   ```
+
+1. run flask application
+
+   ```bash
+   flask run
+   ```
+   
+1. Now you can open the following url in your browser to see the swagger ui page
+
+   ```
+   http://127.0.0.1:5000
+   ```
