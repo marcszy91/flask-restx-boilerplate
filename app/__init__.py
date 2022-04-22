@@ -1,11 +1,13 @@
 import os
 
 from flask import Flask
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
 from .config import config_by_name
 
 db = SQLAlchemy()
+flask_bcrypt = Bcrypt()
 
 
 def create_app() -> Flask:
@@ -25,6 +27,9 @@ def create_app() -> Flask:
 
     # initialize sql alchemy
     db.init_app(app=app)
+
+    # initialie brcypt
+    flask_bcrypt.init_app(app)
 
     return app
 
