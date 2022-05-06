@@ -1,3 +1,4 @@
+import logging
 import os
 
 from flask import Flask
@@ -29,9 +30,23 @@ def create_app() -> Flask:
     db.init_app(app=app)
 
     # initialie brcypt
-    flask_bcrypt.init_app(app)
+    flask_bcrypt.init_app(app=app)
 
     return app
 
 
+def init_logger() -> logging.Logger:
+    """initialze the main logger"""
+    login_level_name = os.getenv(key="LOG_LEVEL", default="CRITICAL")
+    login_level = logging.getLevelName(level=login_level_name)
+    formatter = logging.Formatter(fmt="%(asctime)s %(levelname)s %(message)s")
+    stream_heandler = logging.StreamHandler()
+    stream_heandler.setFormatter(fmt=formatter)
+    logger = logging.getLogger(name="flask-restx-app")
+    logger.setLevel(level=login_level)
+    logger.addHandler(hdlr=stream_heandler)
+    return logger
+
+
+logger = init_logger()
 app = create_app()

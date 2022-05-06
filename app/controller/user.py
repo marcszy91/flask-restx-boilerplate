@@ -67,6 +67,6 @@ class User(Resource):
         """
         user = get_a_user(email=email)
         if not user:
-            api.abort(404)
+            return api.abort(404)
         else:
             return user
