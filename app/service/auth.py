@@ -1,3 +1,4 @@
+from .. import logger
 from app.dto.user import UserDto
 from app.model import User
 from app.utils.auth_helper import AuthHelper
@@ -22,12 +23,13 @@ def login_user(data: Dict[str, str]) -> List:
                 }
                 return response_object, 200
         else:
+            logger.error("Login failed for user %s", data.get("username"))
             response_object = {
                 "status": "fail",
                 "message": "email or password does not match",
             }
             return response_object, 401
     except Exception as e:
-        print(e)
+        logger.critical(e)
         response_object = {"status": "fail", "message": "Try again"}
         return response_object, 500
