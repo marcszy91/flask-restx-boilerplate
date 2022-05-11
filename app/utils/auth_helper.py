@@ -2,6 +2,7 @@ import datetime
 import jwt
 
 from flask import Request
+from typing import List
 
 from ..config import key
 from app.model.user import User
@@ -72,6 +73,39 @@ class AuthHelper:
                 return response_object, 200
             response_object = {"status": "fail", "message": payload}
             return response_object, 401
+        else:
+            response_object = {
+                "status": "fail",
+                "message": "Provide a valid auth token.",
+            }
+            return response_object, 401
+
+    @staticmethod
+    def check_user_roles(current_request: Request, roles: List):
+        """check user roles
+
+        Args:
+            current_request (Request): the current request
+            roles (List): the required roles
+
+        Returns:
+            response_object: the response object
+        """
+        auth_token = current_request.headers.get("X-API-KEY")
+        if auth_token:
+            payload = AuthHelper.decode_auth_token(auth_token=auth_token)
+            user = User.query.filter_by(username=payload).first()
+            for user_role in user.user_roles:
+                if user_role.role.role_name in roles:
+                    response_object = {
+                        "status": "success",
+                        "data": {
+                            "role": user_role.role,
+                        },
+                    }
+                    return response_object, 200
+            response_object = {"status": "fail", "message": "Missing user role"}
+            return response_object, 403
         else:
             response_object = {
                 "status": "fail",
