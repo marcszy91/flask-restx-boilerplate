@@ -1,3 +1,4 @@
+from sqlalchemy import ForeignKey
 from .. import db, flask_bcrypt
 
 
@@ -5,10 +6,11 @@ class User(db.Model):
     """User Model for storing user related details"""
 
     __tablename__ = "user"
-
-    email = db.Column(db.String(255), primary_key=True)
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    email = db.Column(db.String(255), unique=True)
     username = db.Column(db.String(50), unique=True)
     password_hash = db.Column(db.String(100))
+    user_roles = db.relationship("UserRole")
 
     @property
     def password(self):
