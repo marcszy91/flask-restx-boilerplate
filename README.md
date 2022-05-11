@@ -20,6 +20,7 @@ There are the following differences in the repositories aboth:
 [![Python 3.9](https://img.shields.io/badge/python-3.9.10-blue.svg)](https://www.python.org/downloads/release/python-360/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-blue.svg)](https://github.com/psf/black)
 [![Linter: flake8](https://img.shields.io/badge/code%20style-flake8-blue.svg)](https://github.com/PyCQA/flake8)
+[![Changelog: keepachangelog](https://img.shields.io/badge/Changelog-Keep%20a%20Changelog-orange.svg)](https://keepachangelog.com/de/1.0.0/)
 
 ![Workflow](https://github.com/Ezak91/flask-restx-boilerplate/actions/workflows/flake8.yml/badge.svg)
 
