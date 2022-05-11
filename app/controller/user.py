@@ -4,7 +4,7 @@ from typing import Dict, Tuple
 
 from ..dto.user import UserDto
 from ..service.user import save_new_user, get_all_users, get_a_user, add_user_role
-from app.utils.auth_decorator import token_required
+from app.utils.auth_decorator import token_required, role_required
 
 api = UserDto.api
 _user = UserDto.user
@@ -25,6 +25,7 @@ class UserList(Resource):
     @api.doc("list_of_registered_users", security="apikey")
     @api.marshal_list_with(_user, envelope="data")
     @token_required
+    @role_required(["Admin", "Tester"])
     def get(self):
         """List all registered users"""
         return get_all_users()
