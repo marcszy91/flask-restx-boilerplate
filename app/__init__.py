@@ -5,6 +5,9 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
+from sqlalchemy.engine import Engine
+from sqlalchemy import event
+
 from .config import config_by_name
 
 db = SQLAlchemy()
@@ -46,6 +49,14 @@ def init_logger() -> logging.Logger:
     logger.setLevel(level=login_level)
     logger.addHandler(hdlr=stream_heandler)
     return logger
+
+
+# set foreign keys on for sqlite connection
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
 
 
 logger = init_logger()
