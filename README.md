@@ -21,6 +21,9 @@ There are the following differences in the repositories aboth:
 [![Code style: black](https://img.shields.io/badge/code%20style-black-blue.svg)](https://github.com/psf/black)
 [![Linter: flake8](https://img.shields.io/badge/code%20style-flake8-blue.svg)](https://github.com/PyCQA/flake8)
 [![Changelog: keepachangelog](https://img.shields.io/badge/Changelog-Keep%20a%20Changelog-orange.svg)](https://keepachangelog.com/de/1.0.0/)
+[![Versioning: Semantic Versioning 2.0.0](https://img.shields.io/badge/Versioning-Semantic%20Versioning%202.0.0-%23333.svg)](https://semver.org/)
+
+# Build state
 
 ![Workflow](https://github.com/Ezak91/flask-restx-boilerplate/actions/workflows/flake8.yml/badge.svg)
 
