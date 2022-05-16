@@ -1,6 +1,6 @@
 from .. import logger
-from app.dto.user import UserDto
 from app.model import User
+from app.service.blacklist_token import save_blacklist_token
 from app.utils.auth_helper import AuthHelper
 from typing import Dict, List
 
@@ -33,3 +33,25 @@ def login_user(data: Dict[str, str]) -> List:
         logger.critical(e)
         response_object = {"status": "fail", "message": "Try again"}
         return response_object, 500
+
+
+def logout_user(auth_token: str):
+    """Logout user
+
+    Args:
+        auth_token (str): the token
+
+    Returns:
+        dict[str, str], int: The response object, status code
+    """
+    if auth_token:
+        payload = AuthHelper.decode_auth_token(auth_token)
+        user = User.query.filter_by(username=payload).first()
+        if user:
+            return save_blacklist_token(token=auth_token)
+        else:
+            response_object = {"status": "fail", "message": payload}
+            return response_object, 401
+    else:
+        response_object = {"status": "fail", "message": "Provide a valid auth token."}
+        return response_object, 403

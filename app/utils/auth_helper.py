@@ -4,6 +4,8 @@ import jwt
 from flask import Request
 from typing import List
 
+from app.model.blacklist_token import BlacklistToken
+
 from ..config import key
 from app.model.user import User
 
@@ -42,6 +44,9 @@ class AuthHelper:
         """
         try:
             payload = jwt.decode(auth_token, key, algorithms=["HS256"])
+            is_blacklisted = BlacklistToken.check_blacklist(token=auth_token)
+            if is_blacklisted:
+                return "Token blacklisted. Please log in again."
             return payload["sub"]
         except jwt.ExpiredSignatureError:
             return "Signature expired. Please log in again."
