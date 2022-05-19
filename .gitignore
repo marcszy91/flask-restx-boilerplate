@@ -133,3 +133,6 @@ dmypy.json
 
 # databease files
 /app/*.db
+
+# launch.json vscode 
+/.vscode/launch.json

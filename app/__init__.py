@@ -29,6 +29,9 @@ def create_app() -> Flask:
     config = config_by_name[config_name]
     app.config.from_object(obj=config)
 
+    # load additional configs from env
+    load_config_from_env(app=app)
+
     # initialize sql alchemy
     db.init_app(app=app)
 
@@ -49,6 +52,22 @@ def init_logger() -> logging.Logger:
     logger.setLevel(level=login_level)
     logger.addHandler(hdlr=stream_heandler)
     return logger
+
+
+def load_config_from_env(app: Flask) -> None:
+    """load config from env
+
+    Args:
+        app (Flask): the flask app object
+    """
+    # Auth config
+    app.config["AUTH_TYPE"] = os.getenv("AUTH_TYPE", "BASIC")
+    # LADP config
+    if app.config["AUTH_TYPE"] == "LDAP":
+        app.config["LDAP_HOST"] = os.getenv("LDAP_HOST")
+        app.config["LDAP_USER_PREFIX"] = os.getenv("LDAP_USER_PREFIX")
+        app.config["LDAP_SEARCH_BASE"] = os.getenv("LDAP_SEARCH_BASE")
+        app.config["LDAP_SEARCH_FILTER"] = os.getenv("LDAP_SEARCH_FILTER")
 
 
 # set foreign keys on for sqlite connection

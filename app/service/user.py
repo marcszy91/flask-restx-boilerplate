@@ -1,7 +1,9 @@
+from flask import current_app
 from typing import Dict, List, Tuple
 
 from app import db
 from app.model import User, UserRole
+from app.utils.auth_ldap import LDAPHelper
 
 
 def save_new_user(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
@@ -13,8 +15,27 @@ def save_new_user(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
     Returns:
         Tuple[Dict[str, str], int]: the response object and a status code
     """
-    user = User.query.filter_by(email=data["email"]).first()
+    email = data["email"]
+    user = User.query.filter_by(email=email).first()
     if not user:
+        if current_app.config["AUTH_TYPE"] == "LDAP":
+            if not LDAPHelper.ldap_auth(
+                username=data["username"], password=data["password"]
+            ):
+                response_object = {
+                    "status": "fail",
+                    "message": "LDAP user not found or wrong password.",
+                }
+                return response_object, 401
+            ldap_email = LDAPHelper.ldap_get_email_by_username(
+                username=data["username"], password=data["password"]
+            )
+            if ldap_email != email:
+                response_object = {
+                    "status": "fail",
+                    "message": "Wrong email for ldap user.",
+                }
+                return response_object, 401
         new_user = User(
             email=data["email"], username=data["username"], password=data["password"]
         )
