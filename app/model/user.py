@@ -1,5 +1,7 @@
-from sqlalchemy import ForeignKey
 from .. import db, flask_bcrypt
+from app.enum.auth_type import AuthType
+
+from app.utils.auth_ldap import LDAPHelper
 
 
 class User(db.Model):
@@ -22,5 +24,19 @@ class User(db.Model):
             "utf-8"
         )
 
-    def check_password(self, password):
-        return flask_bcrypt.check_password_hash(self.password_hash, password)
+    def check_password(self, password: str, auth_type: str):
+        """check password
+
+        Args:
+            password (str): the password
+            auth_type (str): the auth type
+
+        Returns:
+            _type_: True if login successed otherwise False
+        """
+        if auth_type == AuthType.BASIC.value:
+            return flask_bcrypt.check_password_hash(self.password_hash, password)
+        elif auth_type == AuthType.LDAP.value:
+            return LDAPHelper.ldap_auth(username=self.username, password=password)
+        else:
+            return False

@@ -10,8 +10,13 @@
             "request": "launch",
             "module": "flask",
             "env": {
+                "AUTH_TYP": "BASIC",
                 "FLASK_APP": "run.py",
                 "CONFIG_NAME": "dev",
+                "LDAP_HOST": "LDAP.DOMAIN.COM",
+                "LDAP_SEARCH_BASE": "OU=ORGANIZATION,DC=ORGANIZATION,DC=de",
+                "LDAP_SEARCH_FILTER": "(&(objectClass=person)(sAMAccountName={}))",
+                "LDAP_USER_PREFIX": "DOMAIN\\",                
                 "LOG_LEVEL": "DEBUG"
             },
             "args": [

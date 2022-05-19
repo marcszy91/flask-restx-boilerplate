@@ -25,7 +25,7 @@ class BlacklistToken(db.Model):
             token (str): the auth token
 
         Returns:
-            bool: True if is blacklist otherwhise False
+            bool: True if is blacklist otherwise False
         """
         res = BlacklistToken.query.filter_by(token=str(token)).first()
         if res:

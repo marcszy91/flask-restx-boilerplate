@@ -1,6 +1,11 @@
+from flask import current_app
+
+from app.utils.auth_ldap import LDAPHelper
+
 from .. import logger
 from app.model import User
 from app.service.blacklist_token import save_blacklist_token
+from app.service.user import save_new_user
 from app.utils.auth_helper import AuthHelper
 from typing import Dict, List
 
@@ -12,8 +17,22 @@ def login_user(data: Dict[str, str]) -> List:
         List[]: response object
     """
     try:
+        email = data.get("email")
+        username = data.get("username")
+        password = data.get("password")
         user = User.query.filter_by(username=data.get("username")).first()
-        if user and user.check_password(password=data.get("password")):
+        auth_type = current_app.config["AUTH_TYPE"]
+        # if auth type is ldap and user not exist
+        # create user if ldap credentials are valid
+        if auth_type == "LDAP" and not user:
+            ldap_email = LDAPHelper.ldap_get_email_by_username(
+                username=username, password=password
+            )
+            if ldap_email is not None:
+                user = User(email=email, username=username, password=password)
+                data["email"] = email
+                save_new_user(data=data)
+        if user and user.check_password(password=password, auth_type=auth_type):
             auth_token = AuthHelper.encode_auth_token(username=user.username)
             if auth_token:
                 response_object = {
@@ -23,7 +42,7 @@ def login_user(data: Dict[str, str]) -> List:
                 }
                 return response_object, 200
         else:
-            logger.error("Login failed for user %s", data.get("username"))
+            logger.error("Login failed for user %s", username)
             response_object = {
                 "status": "fail",
                 "message": "username or password does not match",
